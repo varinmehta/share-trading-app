@@ -34,7 +34,7 @@ jobs:
               run: |
                   echo "DB_HOST=localhost" >> $GITHUB_ENV
                   echo "DB_PORT=27017" >> $GITHUB_ENV
-                  echo "DB_NAME=commodities" >> $GITHUB_ENV
+                  echo "DB_NAME=share_trading" >> $GITHUB_ENV
 
             - name: Wait for MongoDB to Be Ready
               run: timeout 10
