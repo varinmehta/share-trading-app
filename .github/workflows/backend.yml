@@ -30,5 +30,5 @@ jobs:
                   echo "MONGODB_URI=mongodb://localhost:27017/share_trading" >> ./backend/.env
 
             - name: Run Tests
-              run: npm test
+              run: npx jest # Use npx to run the local Jest version
               working-directory: ./backend
