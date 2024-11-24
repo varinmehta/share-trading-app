@@ -1,0 +1,49 @@
+name: Backend CI/CD
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: windows-latest
+
+        services:
+            mongo:
+                image: mongo:6.0
+                ports:
+                    - 27017:27017
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18"
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Set Environment Variables
+              run: |
+                  echo "DB_HOST=localhost" >> $GITHUB_ENV
+                  echo "DB_PORT=27017" >> $GITHUB_ENV
+                  echo "DB_NAME=commodities" >> $GITHUB_ENV
+
+            - name: Wait for MongoDB to Be Ready
+              run: timeout 10
+
+            - name: Run Tests
+              run: npm test
+
+            - name: Upload Build Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: backend-build
+                  path: .
