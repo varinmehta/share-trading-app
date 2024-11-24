@@ -9,8 +9,14 @@ on:
             - master
 
 jobs:
-    build-and-test:
+    build:
         runs-on: ubuntu-latest
+
+        services:
+            mongo:
+                image: mongo:6.0
+                ports:
+                    - 27017:27017
 
         steps:
             - name: Checkout Code
@@ -30,5 +36,11 @@ jobs:
                   echo "MONGODB_URI=mongodb://localhost:27017/share_trading" >> ./backend/.env
 
             - name: Run Tests
-              run: npx jest # Use npx to run the local Jest version
+              run: npm test
               working-directory: ./backend
+
+            - name: Upload Build Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: backend-build
+                  path: .
