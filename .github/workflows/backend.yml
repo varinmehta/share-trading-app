@@ -29,6 +29,7 @@ jobs:
 
             - name: Install Dependencies
               run: npm install
+              working-directory: ./backend
 
             - name: Set Environment Variables
               run: |
@@ -41,6 +42,7 @@ jobs:
 
             - name: Run Tests
               run: npm test
+              working-directory: ./backend
 
             - name: Upload Build Artifact
               uses: actions/upload-artifact@v3
