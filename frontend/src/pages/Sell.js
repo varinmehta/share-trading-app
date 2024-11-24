@@ -18,6 +18,7 @@ const Sell = () => {
         e.preventDefault();
 
         try {
+            // eslint-disable-next-line
             const response = await axios.post(
                 "http://localhost:5000/api/shares/sell",
                 {
