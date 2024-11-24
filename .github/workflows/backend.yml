@@ -31,6 +31,10 @@ jobs:
               run: npm install
               working-directory: ./backend
 
+            - name: Install Jest Dependencies
+              run: npm install -g jest
+              working-directory: ./backend
+
             - name: Set up .env file
               run: |
                   echo "MONGODB_URI=mongodb://localhost:27017/share_trading" >> ./backend/.env
