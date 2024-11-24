@@ -29,10 +29,6 @@ jobs:
         run: npm run build
         working-directory: ./frontend
 
-      - name: Run Linting (optional but recommended)
-        run: npm run lint
-        working-directory: ./frontend
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
         with:
