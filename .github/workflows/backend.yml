@@ -9,14 +9,8 @@ on:
             - master
 
 jobs:
-    build:
+    build-and-test:
         runs-on: ubuntu-latest
-
-        services:
-            mongo:
-                image: mongo:6.0
-                ports:
-                    - 27017:27017
 
         steps:
             - name: Checkout Code
@@ -25,27 +19,16 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: "18"
+                  node-version: "20"
 
             - name: Install Dependencies
               run: npm install
               working-directory: ./backend
 
-            - name: Set Environment Variables
+            - name: Set up .env file
               run: |
-                  echo "DB_HOST=localhost" >> $GITHUB_ENV
-                  echo "DB_PORT=27017" >> $GITHUB_ENV
-                  echo "DB_NAME=share_trading" >> $GITHUB_ENV
-
-            - name: Wait for MongoDB to Be Ready
-              run: timeout 10
+                  echo "MONGODB_URI=mongodb://localhost:27017/share_trading" >> ./backend/.env
 
             - name: Run Tests
               run: npm test
               working-directory: ./backend
-
-            - name: Upload Build Artifact
-              uses: actions/upload-artifact@v3
-              with:
-                  name: backend-build
-                  path: .
